@@ -30,6 +30,7 @@
         };
         modules = [
           disko.nixosModules.disko
+          ./modules/disk-config.nix
           ./modules/bitcoin-core-node.nix
           ./prefill-sender/prefill-sender-node.nix
         ];
