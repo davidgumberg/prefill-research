@@ -1,4 +1,3 @@
-# modules/bitcoin-node.nix
 { config, lib, pkgs, bitcoinPackage, ... }:
 
 with lib;
@@ -19,7 +18,22 @@ with lib;
   };
 
   config = mkIf config.services.bitcoinNode.enable {
-    # Create bitcoin user
+    system.stateVersion = "25.11";
+
+    boot.loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+
+    services.openssh = {
+      enable = true;
+      settings.PermitRootLogin = "prohibit-password";
+    };
+
+    users.users.root.openssh.authorizedKeys.keys = [
+      # OMITTED
+    ];
+
     users.users.bitcoin = {
       isSystemUser = true;
       group = "bitcoin";
@@ -28,7 +42,6 @@ with lib;
     };
     users.groups.bitcoin = {};
 
-    # Deploy the config file
     environment.etc."bitcoin/bitcoin.conf" = {
       source = config.services.bitcoinNode.configFile;
       mode = "0640";
@@ -36,7 +49,6 @@ with lib;
       group = "bitcoin";
     };
 
-    # Systemd service
     systemd.services.bitcoind = {
       description = "Bitcoin daemon";
       after = [ "network.target" ];
@@ -55,6 +67,7 @@ with lib;
     };
 
     networking.firewall.allowedTCPPorts = [ 
+      22
       8333
     ];
   };

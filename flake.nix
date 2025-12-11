@@ -26,7 +26,7 @@
       prefill-sender-node = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = { 
-          bitcoinPackage = prefill-sender.${system}.default;
+          bitcoinPackage = prefill-sender.packages.${system}.default;
         };
         modules = [
           disko.nixosModules.disko
@@ -39,7 +39,7 @@
       prefill-receiver-node = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = { 
-          bitcoinPackage = prefill-receiver.${system}.default;
+          bitcoinPackage = prefill-receiver.packages.${system}.default;
         };
         modules = [
           disko.nixosModules.disko
