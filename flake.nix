@@ -21,30 +21,33 @@
   outputs = { self, nixpkgs, disko, prefill-sender, prefill-receiver, ... }:
   let
     system = "x86_64-linux";
+    commonModules = [
+      disko.nixosModules.disko
+      ./modules/disk-config.nix
+      ./modules/hardware-hetzner.nix
+      ./modules/bitcoin-core-node.nix
+    ];
+    commonSpecialArgs = {
+      bitcoinBaseConf = ./bitcoin-base.conf;
+    };
   in {
     nixosConfigurations = {
       prefill-sender-node = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { 
+        specialArgs = commonSpecialArgs // { 
           bitcoinPackage = prefill-sender.packages.${system}.default;
         };
-        modules = [
-          disko.nixosModules.disko
-          ./modules/disk-config.nix
-          ./modules/bitcoin-core-node.nix
+        modules = commonModules ++ [
           ./prefill-sender/prefill-sender-node.nix
         ];
       };
       
       prefill-receiver-node = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { 
+        specialArgs = commonSpecialArgs // { 
           bitcoinPackage = prefill-receiver.packages.${system}.default;
         };
-        modules = [
-          disko.nixosModules.disko
-          ./modules/disk-config.nix
-          ./modules/bitcoin-core-node.nix
+        modules = commonModules ++ [
           ./prefill-receiver/prefill-receiver-node.nix
         ];
       };

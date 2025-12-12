@@ -6,23 +6,35 @@ with lib;
   options.services.bitcoinNode = {
     enable = mkEnableOption "Bitcoin Core node";
     
-    configFile = mkOption {
-      type = types.path;
-      description = "Path to bitcoin.conf";
-    };
-    
     dataDir = mkOption {
       type = types.str;
       default = "/bitcoin";
+    };
+
+    nodeConfig = mkOption {
+      type = types.lines;
+      default = "";
+      description = "Node-specific bitcoin.conf settings";
     };
   };
 
   config = mkIf config.services.bitcoinNode.enable {
     system.stateVersion = "25.11";
+    nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-    boot.loader = {
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
+    environment.systemPackages = with pkgs; [
+        vim
+        git
+    ] ++ [
+      bitcoinPackage
+    ];
+
+    boot = {
+       loader = {
+         systemd-boot.enable = true;
+         efi.canTouchEfiVariables = true;
+       };
+       initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" "ext4" ];
     };
 
     services.openssh = {
@@ -31,7 +43,7 @@ with lib;
     };
 
     users.users.root.openssh.authorizedKeys.keys = [
-      # OMITTED
+        "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIHN+Hrhk5MhyH1sGc81VkMJwM7W9M2YcNOmWR3rM4lqKAAAABHNzaDo="
     ];
 
     users.users.bitcoin = {
@@ -42,8 +54,16 @@ with lib;
     };
     users.groups.bitcoin = {};
 
-    environment.etc."bitcoin/bitcoin.conf" = {
-      source = config.services.bitcoinNode.configFile;
+    environment.etc."bitcoin/base.conf" = {
+      source = ./bitcoin-base.conf;
+      mode = "0640";
+      user = "bitcoin";
+      group = "bitcoin";
+    };
+
+    # Node-specific config
+    environment.etc."bitcoin/node.conf" = {
+      source = config.services.bitcoinNode.nodeConfig;
       mode = "0640";
       user = "bitcoin";
       group = "bitcoin";
@@ -61,7 +81,7 @@ with lib;
         ExecStart = ''
           ${bitcoinPackage}/bin/bitcoind \
             -datadir=${config.services.bitcoinNode.dataDir} \
-            -conf=/etc/bitcoin/bitcoin.conf \
+            -conf=/etc/bitcoin/base.conf \
         '';
       };
     };

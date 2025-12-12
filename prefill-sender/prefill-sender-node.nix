@@ -5,6 +5,6 @@
   
   services.bitcoinNode = {
     enable = true;
-    configFile = ./bitcoin.conf;
+    nodeConfig = ./bitcoin.conf;
   };
 }
