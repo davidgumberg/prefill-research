@@ -1,4 +1,5 @@
-{ config, lib, pkgs, bitcoinPackage, ... }:
+{ config, lib, pkgs, bitcoinPackage, bitcoinBaseConf, ... }:
+
 
 with lib;
 
@@ -12,9 +13,8 @@ with lib;
     };
 
     nodeConfig = mkOption {
-      type = types.lines;
-      default = "";
-      description = "Node-specific bitcoin.conf settings";
+      type = types.path;
+      description = "Path to node-specific bitcoin.conf";
     };
   };
 
@@ -55,7 +55,7 @@ with lib;
     users.groups.bitcoin = {};
 
     environment.etc."bitcoin/base.conf" = {
-      source = ./bitcoin-base.conf;
+      source = bitcoinBaseConf;
       mode = "0640";
       user = "bitcoin";
       group = "bitcoin";
@@ -86,9 +86,11 @@ with lib;
       };
     };
 
-    networking.firewall.allowedTCPPorts = [ 
-      22
-      8333
-    ];
+    networking = {
+      firewall.allowedTCPPorts = [ 
+        22
+        8333
+      ];
+    };
   };
 }
