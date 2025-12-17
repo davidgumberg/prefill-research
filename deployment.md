@@ -2,6 +2,9 @@
 hcloud server create --name prefill-sender --type cpx32 --location hel1 --image fedora-42 --ssh-key fido
 
 # Nix deployment
+
+docker build -t nix .
+
 docker run -it --rm \
     -v "./:/workspace" \
     -v $SSH_AUTH_SOCK:/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent \
