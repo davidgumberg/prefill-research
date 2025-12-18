@@ -35,7 +35,7 @@ docker run -it --rm \
 
 ## Deploy the nodes!!
 ```
-nix run --impure github:nix-community/nixos-anywhere -- \
+nix run github:nix-community/nixos-anywhere -- \
     --flake .#prefill-sender-node \
     root@$SENDER_IP
 ```
