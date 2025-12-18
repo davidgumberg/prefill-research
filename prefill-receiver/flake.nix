@@ -17,7 +17,7 @@
           owner = "davidgumberg";
           repo = "bitcoin";
           rev = "prefill-receiver";
-          hash = "sha256-n55efD4A/f2th099a43F0NGuc/Pp9Hp/hDL5CZXMlrs= ";
+          hash = "sha256-bJN3hK2PazZpZYSwGIhNJ0xk5wmLOqlQYtikSo7OvLw=";
         };
 
         nativeBuildInputs = [
