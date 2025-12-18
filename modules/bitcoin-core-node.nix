@@ -1,4 +1,4 @@
-{ config, lib, pkgs, bitcoinPackage, bitcoinBaseConf, deploySSHKey, ... }:
+{ config, lib, pkgs, bitcoinPackage, bitcoinBaseConf, env, ... }:
 
 
 with lib;
@@ -42,7 +42,7 @@ with lib;
       settings.PermitRootLogin = "prohibit-password";
     };
 
-    users.users.root.openssh.authorizedKeys.keys = [ deploySSHKey ];
+    users.users.root.openssh.authorizedKeys.keys = [ env.deploySSHKey ];
 
     users.users.bitcoin = {
       isSystemUser = true;

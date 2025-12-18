@@ -21,6 +21,7 @@
   outputs = { self, nixpkgs, disko, prefill-sender, prefill-receiver, ... }:
   let
     system = "x86_64-linux";
+    # env = import ./env.nix
     commonModules = [
       disko.nixosModules.disko
       ./modules/disk-config.nix
@@ -29,9 +30,7 @@
     ];
     commonSpecialArgs = {
       bitcoinBaseConf = ./bitcoin-base.conf;
-      deploySSHKey = if builtins.pathExists ./sshkey.nix 
-               then import ./sshkey.nix 
-               else throw "Please create 'sshkey.nix' containing a string with your SSH key!";
+      env = import ./env.nix;
     };
   in {
     nixosConfigurations = {

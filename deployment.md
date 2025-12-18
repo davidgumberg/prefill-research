@@ -1,7 +1,8 @@
-# Variable setup
-You will probably have to modify this for your setup, this is just an example!
+# SSH key setup
+You will probably have to modify this value for your setup, this is just an example!
+
 ```bash
-echo "\"$(cat ~/.ssh/id_ed25519_sk.pub)\"" > sshkey.nix
+export DEPLOY_SSH_KEY=$(cat ~/.ssh/id_ed25519_sk.pub)
 ```
 
 # Hetzner deployment
@@ -30,18 +31,43 @@ docker run -it --rm \
     -v $SSH_AUTH_SOCK:/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent \
     -e SENDER_IP="$SENDER_IP" \
     -e RECEIVER_IP="$RECEIVER_IP" \
+    -e DEPLOY_SSH_KEY="$DEPLOY_SSH_KEY" \
     nix
 ```
 
-## Deploy the nodes!!
+## Inside the Container
+
+### Nix configuration management
+
+First, to generate a file that exposes our environment variables in nix, since
+`--impure` can't be used with nixos-anywhere I think:
+
+```bash
+./abuse-nix.sh
 ```
+
+## Deploy the nodes!!
+
+First the prefill-sending node...
+
+```bash
 nix run github:nix-community/nixos-anywhere -- \
     --flake .#prefill-sender-node \
     root@$SENDER_IP
 ```
 
+Next the prefill-receiving node...
+
+```bash
+nix run github:nix-community/nixos-anywhere -- \
+    --flake .#prefill-receiver-node \
+    root@$RECEIVER_IP
+```
+
 
 # Nix redeployment
+
+If you have to...🕰️
 
 ```bash
 nix run nixpkgs#nixos-rebuild -- \
