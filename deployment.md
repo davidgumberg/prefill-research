@@ -1,7 +1,7 @@
 # Variable setup
 You will probably have to modify this for your setup, this is just an example!
 ```bash
-echo "\"$(cat ~/.ssh/id_ed25519.pub)\""
+echo "\"$(cat ~/.ssh/id_ed25519_sk.pub)\"" > sshkey.nix
 ```
 
 # Hetzner deployment
