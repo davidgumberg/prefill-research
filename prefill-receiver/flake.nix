@@ -10,14 +10,14 @@
     in
     {
       packages.${system}.default = pkgs.stdenv.mkDerivation {
-        pname = "bitcoin-core";
+        pname = "prefill-receiver";
         version = "0.0.0.0";
 
         src = pkgs.fetchFromGitHub {
           owner = "davidgumberg";
           repo = "bitcoin";
-          rev = "prefill-sender";
-          hash = "sha256-3u/8u9/tLc1XcVx1qjsrKUKZI1x2V1C4ZMXpM4hxejI=";
+          rev = "prefill-receiver";
+          hash = "sha256-n55efD4A/f2th099a43F0NGuc/Pp9Hp/hDL5CZXMlrs= ";
         };
 
         nativeBuildInputs = [
@@ -31,6 +31,7 @@
         ];
         cmakeFlags = [
             "-DBUILD_GUI=OFF"
+            "-DBUILD_TESTS=OFF"
             "-DBUILD_WALLET=OFF"
             "-DENABLE_IPC=OFF"
         ];

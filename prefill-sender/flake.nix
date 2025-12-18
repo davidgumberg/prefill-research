@@ -10,14 +10,14 @@
     in
     {
       packages.${system}.default = pkgs.stdenv.mkDerivation {
-        pname = "Bitcoin Core";
+        pname = "prefill-sender";
         version = "0.0.0.0";
 
         src = pkgs.fetchFromGitHub {
           owner = "davidgumberg";
           repo = "bitcoin";
           rev = "prefill-sender";
-          hash = "sha256-qclBRGb5pAxFv6kTvQ+/JQ2/gKgyxK6qAgblVwFtimk=";
+          hash = "sha256-n55efD4A/f2th099a43F0NGuc/Pp9Hp/hDL5CZXMlrs=";
         };
 
         nativeBuildInputs = [
@@ -31,6 +31,7 @@
         ];
         cmakeFlags = [
             "-DBUILD_GUI=OFF"
+            "-DBUILD_TESTS=OFF"
             "-DBUILD_WALLET=OFF"
             "-DENABLE_IPC=OFF"
         ];
