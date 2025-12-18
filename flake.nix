@@ -29,6 +29,9 @@
     ];
     commonSpecialArgs = {
       bitcoinBaseConf = ./bitcoin-base.conf;
+      deploySSHKey = if builtins.pathExists ./sshkey.nix 
+               then import ./sshkey.nix 
+               else throw "Please create 'sshkey.nix' containing a string with your SSH key!";
     };
   in {
     nixosConfigurations = {
