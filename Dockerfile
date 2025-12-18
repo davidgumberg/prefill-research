@@ -8,3 +8,5 @@ RUN git config --global --add safe.directory /workspace
 
 RUN nix profile add nixpkgs#vim
 RUN nix profile add nixpkgs#nixos-rebuild
+
+WORKDIR /workspace
