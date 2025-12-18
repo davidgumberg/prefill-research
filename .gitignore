@@ -1,2 +1,1 @@
-sshkey.nix
-.env
+env.nix
