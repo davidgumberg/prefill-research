@@ -1,1 +1,2 @@
-env.nix
+# removing it, so I can test it
+#env.nix
