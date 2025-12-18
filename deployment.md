@@ -30,7 +30,6 @@ docker run -it --rm \
     -v $SSH_AUTH_SOCK:/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent \
     -e SENDER_IP="$SENDER_IP" \
     -e RECEIVER_IP="$RECEIVER_IP" \
-    -e DEPLOY_SSH_KEY="$DEPLOY_SSH_KEY" \
     nix
 ```
 
