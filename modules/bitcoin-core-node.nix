@@ -42,7 +42,7 @@ with lib;
       settings.PermitRootLogin = "prohibit-password";
     };
 
-    users.users.root.openssh.authorizedKeys.keys = deploySSHKey;
+    users.users.root.openssh.authorizedKeys.keys = [ deploySSHKey ];
 
     users.users.bitcoin = {
       isSystemUser = true;
