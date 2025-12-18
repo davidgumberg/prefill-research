@@ -67,10 +67,13 @@ with lib;
 
     # Node-specific config
     environment.etc."bitcoin/node.conf" = {
-      source = config.services.bitcoinNode.nodeConfig;
       mode = "0640";
       user = "bitcoin";
       group = "bitcoin";
+      text = ''
+        ${builtins.readFile config.services.bitcoinNode.nodeConfig}
+        ${config.services.bitcoinNode.extraConfig}
+      '';
     };
 
     systemd.services.bitcoind = {
