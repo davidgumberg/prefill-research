@@ -7,7 +7,7 @@
     enable = true;
     nodeConfig = ./bitcoin.conf;
     extraConfig = ''
-        connect=${env.senderIP}
+        addnode=${env.senderIP}
     '';
   };
 }
