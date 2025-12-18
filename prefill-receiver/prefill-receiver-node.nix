@@ -7,5 +7,8 @@
   services.bitcoinNode = {
     enable = true;
     nodeConfig = ./node.conf;
+    extraConfig = ''
+        connect=${env.senderIP}
+    '';
   };
 }

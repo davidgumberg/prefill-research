@@ -16,6 +16,12 @@ with lib;
       type = types.path;
       description = "Path to node-specific bitcoin.conf";
     };
+
+    extraConfig = mkOption {
+        type = types.lines;
+        default = "";
+        description = "Nix-generated node-specif bitcoin.conf lines. (IP's).";
+    };
   };
 
   config = mkIf config.services.bitcoinNode.enable {
