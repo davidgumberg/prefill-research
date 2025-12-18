@@ -1,12 +1,11 @@
-#prefill-receiver/prefill-receiver-node.nix
-{ config, pkgs, ... }:
+{ config, pkgs, env, ... }:
 
 {
   networking.hostName = "prefill-receiver";
   
   services.bitcoinNode = {
     enable = true;
-    nodeConfig = ./node.conf;
+    nodeConfig = ./bitcoin.conf;
     extraConfig = ''
         connect=${env.senderIP}
     '';
