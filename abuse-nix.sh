@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 cat > env.nix <<EOF
 {
     deploySSHKey = "$DEPLOY_SSH_KEY";
