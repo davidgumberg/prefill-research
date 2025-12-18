@@ -16,16 +16,9 @@
     env = import ./env.nix;
     commonModules = [
       disko.nixosModules.disko
-
-      # added this
       ./configuration.nix
-
-      # these are your's
       ./modules/disk-config.nix
       ./modules/hardware-hetzner.nix
-
-      # dropped this, as were using the configuration.nix and services.bitcoind now
-      # ./modules/bitcoin-core-node.nix
     ];
     commonSpecialArgs = { inherit env; };
     pkgs = import nixpkgs { inherit system; };

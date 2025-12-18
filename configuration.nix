@@ -2,20 +2,19 @@
 , lib
 , config
 , env
-# this is going to be addnode=${env.senderIP} on the reciever node
+# this is going to be addnode=${env.senderIP} on the receiver node
 , extraExtraConfig ? null
 , ...
 }:
 
 {
-
   # naming this mainnet, but could be anything
   # restart it with: systemctl restart bitcoind-mainnet
   services.bitcoind."mainnet" = {
     enable = true;
     # By default, if we don't set a custom package here, its going to use the Bitcoin Core from nixpkgs.
     # https://search.nixos.org/packages?channel=25.11&show=bitcoind&query=bitcoind
-    # but we can overrite it somewhere else too (which I do)
+    # but this is set on a per-node basis in flake.nix
     # package = ...
     prune = 550;
     dbCache = 4500;
@@ -54,9 +53,6 @@
     initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" "ext4" ];
   };
 
-  # by default, this automatically opens the port, you don't need to open it
-  # see default value of services.openssh.openFirewall
-  # https://search.nixos.org/options?channel=25.11&show=services.openssh.openFirewall&query=services.openssh.openFirewall
   services.openssh = {
     enable = true;
     settings.PermitRootLogin = "prohibit-password";
