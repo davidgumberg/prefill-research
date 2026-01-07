@@ -33,7 +33,7 @@
         };
         modules = commonModules ++ [
           {
-            # setting the custom, per-host package here..
+            networking.hostName = "prefill-sender";
             services.bitcoind."mainnet".package = pkgs.callPackage ./bitcoind.nix {
               gitBranch = "prefill-sender";
               gitCommit = "1c8aace77e0114ff7bf2144412936e6194770d89";
@@ -51,7 +51,7 @@
         };
         modules = commonModules ++ [
           {
-            # setting the custom, per-host package here..
+            networking.hostName = "prefill-receiver";
             services.bitcoind."mainnet".package = pkgs.callPackage ./bitcoind.nix {
               gitBranch = "prefill-receiver";
               gitCommit = "00c1e0754b1d3024064cce253b52822a49600e9f";
