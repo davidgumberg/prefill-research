@@ -18,7 +18,7 @@
     # package = ...
     prune = 550;
     dbCache = 4500;
-    dataDir = "/bitcoin"
+    dataDir = "/bitcoin";
     extraConfig = ''
       logtimemicros=1
 
