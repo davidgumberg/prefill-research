@@ -36,7 +36,7 @@
             # setting the custom, per-host package here..
             services.bitcoind."mainnet".package = pkgs.callPackage ./bitcoind.nix {
               gitBranch = "prefill-sender";
-              gitCommit = "9ea5096788345015f80aaeb5928a3dfc927e882f";
+              gitCommit = "1c8aace77e0114ff7bf2144412936e6194770d89";
             };
 
           }
@@ -54,7 +54,7 @@
             # setting the custom, per-host package here..
             services.bitcoind."mainnet".package = pkgs.callPackage ./bitcoind.nix {
               gitBranch = "prefill-receiver";
-              gitCommit = "c3f16bc3b1eeb1aee5fce5d13d258e4fed858d67";
+              gitCommit = "00c1e0754b1d3024064cce253b52822a49600e9f";
             };
           }
         ];
