@@ -34,6 +34,10 @@
     '';
   };
 
+  systemd.tmpfiles.rules = [
+    "d /bitcoin 0770 bitcoind-mainnet bitcoind-mainnet - -"
+  ];
+
   networking = {
     # don't need to open 22, as services.openssh.enable = true; already does that. See below.
     firewall.allowedTCPPorts = [ 8333 ];
