@@ -36,7 +36,7 @@
             networking.hostName = "prefill-sender";
             services.bitcoind."mainnet".package = pkgs.callPackage ./bitcoind.nix {
               gitBranch = "prefill-sender";
-              gitCommit = "e20c47fd79b84e5081a7df67f1dd8f43aff01956";
+              gitCommit = "4d0d95ceb5dc14ef69cb8090112151abf8f05c3d";
             };
 
           }
