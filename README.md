@@ -109,10 +109,19 @@ grep -P "Adding peer \d+ as a high bandwidth" /bitcoin/debug.log
 
 If you have to...🕰️
 
+sender:
 ```bash
 nix run nixpkgs#nixos-rebuild -- \
   switch \
   --flake .#prefill-sender-node \
   --target-host root@$SENDER_IP
+```
+
+receiver
+```bash
+nix run nixpkgs#nixos-rebuild -- \
+  switch \
+  --flake .#prefill-receiver-node \
+  --target-host root@$RECEIVER_IP
 ```
 
